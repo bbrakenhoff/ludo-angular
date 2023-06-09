@@ -1,1 +1,5 @@
 <p>first-player works!</p>
+<p>first player: {{ (firstPlayerIndex$ | async) ?? "?" }}</p>
+<p>current player: {{ currentPlayerIndex$ | async }}</p>
+<p>latest dice roll: {{ latestDiceRolls$ | async | json }}</p>
+<button (click)="currentPlayerRollDice()">roll dice</button>

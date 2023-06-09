@@ -15,6 +15,7 @@ describe('FirstPlayerDeterminer', () => {
   let playerSpies: PlayerSpy[];
   let diceSpy: DiceSpy;
   let firstPlayerIndexObserverSpy: ObserverSpy<number>;
+  let currentPlayerIndexObserver: ObserverSpy<number>;
 
   beforeEach(() => {
     firstPlayerIndexObserverSpy = createObserverSpy<number>();
@@ -33,6 +34,9 @@ describe('FirstPlayerDeterminer', () => {
     service.setPlayers(playerSpies.map((spy) => spy.player));
 
     service.firstPlayerIndex$.subscribe(firstPlayerIndexObserverSpy.observer);
+
+    currentPlayerIndexObserver = createObserverSpy();
+    service.currentPlayerIndex$.subscribe(currentPlayerIndexObserver);
   });
 
   it('should be created', () => {
@@ -40,13 +44,6 @@ describe('FirstPlayerDeterminer', () => {
   });
 
   describe('currentPlayerRollDice()', () => {
-    let currentPlayerIndexObserver: ObserverSpy<number>;
-
-    beforeEach(() => {
-      currentPlayerIndexObserver = createObserverSpy();
-      service.currentPlayerIndex$.subscribe(currentPlayerIndexObserver);
-    });
-
     it('should let current player roll the dice', () => {
       service.currentPlayerRollDice();
       expect(playerSpies[0].rollDice).toHaveBeenCalledWith(diceSpy);
@@ -120,6 +117,7 @@ describe('FirstPlayerDeterminer', () => {
         2
       );
       expect(firstPlayerIndexObserverSpy.complete).toHaveBeenCalled();
+      expect(currentPlayerIndexObserver.complete).toHaveBeenCalled();
     });
 
     it('should return the index of the player with highest dice roll after highest dice roll exists multiple times', () => {
@@ -143,6 +141,7 @@ describe('FirstPlayerDeterminer', () => {
 
       expect(firstPlayerIndexObserverSpy.next).toHaveBeenCalledOnceWith(3);
       expect(firstPlayerIndexObserverSpy.complete).toHaveBeenCalled();
+      expect(currentPlayerIndexObserver.complete).toHaveBeenCalled();
     });
   });
 });

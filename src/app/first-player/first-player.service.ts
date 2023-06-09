@@ -6,6 +6,7 @@ import {
   filter,
   map,
   take,
+  tap,
 } from 'rxjs';
 import { Dice } from '../models/dice';
 import { Player } from '../models/player';
@@ -30,6 +31,7 @@ export class FirstPlayerService {
       map((latestDiceRolls) =>
         latestDiceRolls.indexOf(this.findHighestDiceRoll(latestDiceRolls))
       ),
+      tap(() => this.currentPlayerIndex$$.complete()),
       take(1) // complete after first player index found
     );
   }
