@@ -40,9 +40,21 @@ describe('FirstPlayerDeterminer', () => {
   });
 
   describe('currentPlayerRollDice()', () => {
+    let currentPlayerIndexObserver: ObserverSpy<number>;
+
+    beforeEach(() => {
+      currentPlayerIndexObserver = createObserverSpy();
+      service.currentPlayerIndex$.subscribe(currentPlayerIndexObserver);
+    });
+
     it('should let current player roll the dice', () => {
       service.currentPlayerRollDice();
       expect(playerSpies[0].rollDice).toHaveBeenCalledWith(diceSpy);
+
+      expect(currentPlayerIndexObserver.next.calls.count()).toBe(2);
+      expect(
+        currentPlayerIndexObserver.next.calls.allArgs().map((v) => v[0])
+      ).toEqual([0, 1]);
     });
 
     it('should change the current player', () => {
@@ -61,6 +73,11 @@ describe('FirstPlayerDeterminer', () => {
       service.currentPlayerRollDice();
       expect(playerSpies[0].rollDice).toHaveBeenCalledWith(diceSpy);
       expect(playerSpies[0].rollDice).toHaveBeenCalledTimes(2);
+
+      expect(currentPlayerIndexObserver.next.calls.count()).toBe(6);
+      expect(
+        currentPlayerIndexObserver.next.calls.allArgs().map((v) => v[0])
+      ).toEqual([0, 1, 2, 3, 0, 1]);
     });
   });
 

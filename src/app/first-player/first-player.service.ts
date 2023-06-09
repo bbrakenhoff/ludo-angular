@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable, combineLatest, filter, map, take } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  combineLatest,
+  filter,
+  map,
+  take,
+} from 'rxjs';
 import { Dice } from '../models/dice';
 import { Player } from '../models/player';
 
@@ -27,27 +34,31 @@ export class FirstPlayerService {
     );
   }
 
-  private currentPlayerIndex = 0;
+  private readonly currentPlayerIndex$$ = new BehaviorSubject(0);
+  public readonly currentPlayerIndex$ =
+    this.currentPlayerIndex$$.asObservable();
   public firstPlayerIndex$!: Observable<number>;
 
   public constructor(private readonly dice: Dice) {}
 
   public currentPlayerRollDice(): void {
-    this.players[this.currentPlayerIndex].rollDice(this.dice);
+    this.players[this.currentPlayerIndex$$.value].rollDice(this.dice);
     this.nextPlayer();
   }
 
   private nextPlayer(): void {
-    this.currentPlayerIndex++;
+    let nextPlayerIndex = this.currentPlayerIndex$$.value + 1;
 
-    if (this.currentPlayerIndex === this.players.length) {
-      this.currentPlayerIndex = 0;
+    if (nextPlayerIndex === this.players.length) {
+      nextPlayerIndex = 0;
     }
+
+    this.currentPlayerIndex$$.next(nextPlayerIndex);
   }
 
   private allPlayersRolledDice(latestDiceRolls: number[]): boolean {
     return (
-      this.currentPlayerIndex === 0 &&
+      this.currentPlayerIndex$$.value === 0 &&
       latestDiceRolls.every((diceRoll) => diceRoll > 0)
     );
   }
