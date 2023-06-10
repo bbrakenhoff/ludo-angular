@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { Dice } from '../models/dice';
 import { DiceSpy, createDiceSpy } from '../models/dice.spy';
-import { NUMBER_OF_PLAYERS } from '../models/game-constants';
+import { DICE, NUMBER_OF_PLAYERS, PLAYERS } from '../models/game-constants';
 import {
   PlayerSpy,
   createPlayerMock as createPlayerSpy,
@@ -9,7 +8,7 @@ import {
 import { ObserverSpy, createObserverSpy } from '../observer-spy';
 import { FirstPlayerService } from './first-player.service';
 
-describe('FirstPlayerDeterminer', () => {
+describe('FirstPlayerService', () => {
   let service: FirstPlayerService;
 
   let playerSpies: PlayerSpy[];
@@ -28,10 +27,13 @@ describe('FirstPlayerDeterminer', () => {
     diceSpy = createDiceSpy();
 
     TestBed.configureTestingModule({
-      providers: [{ provide: Dice, useValue: diceSpy }, FirstPlayerService],
+      providers: [
+        FirstPlayerService,
+        { provide: DICE, useValue: diceSpy.dice },
+        { provide: PLAYERS, useValue: playerSpies.map((spy) => spy.player) },
+      ],
     });
     service = TestBed.inject(FirstPlayerService);
-    service.setPlayers(playerSpies.map((spy) => spy.player));
 
     service.firstPlayerIndex$.subscribe(firstPlayerIndexObserverSpy.observer);
 
@@ -46,7 +48,7 @@ describe('FirstPlayerDeterminer', () => {
   describe('currentPlayerRollDice()', () => {
     it('should let current player roll the dice', () => {
       service.currentPlayerRollDice();
-      expect(playerSpies[0].rollDice).toHaveBeenCalledWith(diceSpy);
+      expect(playerSpies[0].rollDice).toHaveBeenCalledWith(diceSpy.dice);
 
       expect(currentPlayerIndexObserver.next.calls.count()).toBe(2);
       expect(
@@ -56,19 +58,19 @@ describe('FirstPlayerDeterminer', () => {
 
     it('should change the current player', () => {
       service.currentPlayerRollDice();
-      expect(playerSpies[0].rollDice).toHaveBeenCalledWith(diceSpy);
+      expect(playerSpies[0].rollDice).toHaveBeenCalledWith(diceSpy.dice);
 
       service.currentPlayerRollDice();
-      expect(playerSpies[1].rollDice).toHaveBeenCalledWith(diceSpy);
+      expect(playerSpies[1].rollDice).toHaveBeenCalledWith(diceSpy.dice);
 
       service.currentPlayerRollDice();
-      expect(playerSpies[2].rollDice).toHaveBeenCalledWith(diceSpy);
+      expect(playerSpies[2].rollDice).toHaveBeenCalledWith(diceSpy.dice);
 
       service.currentPlayerRollDice();
-      expect(playerSpies[3].rollDice).toHaveBeenCalledWith(diceSpy);
+      expect(playerSpies[3].rollDice).toHaveBeenCalledWith(diceSpy.dice);
 
       service.currentPlayerRollDice();
-      expect(playerSpies[0].rollDice).toHaveBeenCalledWith(diceSpy);
+      expect(playerSpies[0].rollDice).toHaveBeenCalledWith(diceSpy.dice);
       expect(playerSpies[0].rollDice).toHaveBeenCalledTimes(2);
 
       expect(currentPlayerIndexObserver.next.calls.count()).toBe(6);

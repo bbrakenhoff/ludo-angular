@@ -1,47 +1,44 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {
   BehaviorSubject,
-  Observable,
   combineLatest,
   filter,
   map,
   take,
-  tap,
+  tap
 } from 'rxjs';
 import { Dice } from '../models/dice';
 import { Player } from '../models/player';
+import { DICE, PLAYERS } from '../models/game-constants';
 
 @Injectable()
 export class FirstPlayerService {
-  private players!: Player[];
-
-  public setPlayers(players: Player[]): void {
-    this.players = players;
-
-    const latestDiceRolls$ = combineLatest(
-      this.players.map((player) => player.latestDiceRoll$)
-    );
-
-    this.firstPlayerIndex$ = latestDiceRolls$.pipe(
-      filter(
-        (latestDiceRolls) =>
-          this.allPlayersRolledDice(latestDiceRolls) &&
-          this.highestDiceRollOnlyOnce(latestDiceRolls)
-      ),
-      map((latestDiceRolls) =>
-        latestDiceRolls.indexOf(this.findHighestDiceRoll(latestDiceRolls))
-      ),
-      tap(() => this.currentPlayerIndex$$.complete()),
-      take(1) // complete after first player index found
-    );
-  }
-
   private readonly currentPlayerIndex$$ = new BehaviorSubject(0);
   public readonly currentPlayerIndex$ =
     this.currentPlayerIndex$$.asObservable();
-  public firstPlayerIndex$!: Observable<number>;
 
-  public constructor(private readonly dice: Dice) {}
+  private readonly latestDiceRolls$ = combineLatest(
+    this.players.map((player) => player.latestDiceRoll$)
+  );
+
+  public readonly firstPlayerIndex$ = this.latestDiceRolls$.pipe(
+    filter(
+      (latestDiceRolls) =>
+        this.allPlayersRolledDice(latestDiceRolls) &&
+        this.highestDiceRollOnlyOnce(latestDiceRolls)
+    ),
+    map((latestDiceRolls) =>
+      latestDiceRolls.indexOf(this.findHighestDiceRoll(latestDiceRolls))
+    ),
+    // complete after first player index found
+    tap(() => this.currentPlayerIndex$$.complete()),
+    take(1)
+  );
+
+  public constructor(
+    @Inject(DICE) private readonly dice: Dice,
+    @Inject(PLAYERS) private readonly players: Player[]
+  ) {}
 
   public currentPlayerRollDice(): void {
     this.players[this.currentPlayerIndex$$.value].rollDice(this.dice);
