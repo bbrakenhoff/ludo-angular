@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FirstPlayerComponent } from './first-player.component';
 import { FirstPlayerService } from './first-player.service';
-import { LudoColorPipe } from '../ludo-color.pipe';
+import { LudoColorPipe } from '../../shared/pipes/ludo-color.pipe';
 
 describe('FirstPlayerComponent', () => {
   let component: FirstPlayerComponent;

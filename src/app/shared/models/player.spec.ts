@@ -1,7 +1,7 @@
 import { Observer } from 'rxjs';
 import { Dice } from './dice';
 import { Player } from './player';
-import { createObserverSpy } from '../observer-spy';
+import { createObserverSpy } from '../../observer-spy';
 import { Pawn } from './pawn';
 
 describe('Player', () => {

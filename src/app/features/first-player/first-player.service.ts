@@ -7,9 +7,9 @@ import {
   take,
   tap
 } from 'rxjs';
-import { Dice } from '../models/dice';
-import { Player } from '../models/player';
-import { DICE, PLAYERS } from '../models/game-constants';
+import { Dice } from '../../shared/models/dice';
+import { Player } from '../../shared/models/player';
+import { DICE, PLAYERS } from '../../shared/models/game-constants';
 
 @Injectable()
 export class FirstPlayerService {

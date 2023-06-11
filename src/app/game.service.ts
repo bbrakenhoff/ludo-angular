@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AllColors, LudoColor } from './models/ludo-color';
-import { Player } from './models/player';
-import { Pawn } from './models/pawn';
-import { NUMBER_OF_PAWNS_PER_PLAYER } from './models/game-constants';
+import { AllColors, LudoColor } from './shared/models/ludo-color';
+import { Player } from './shared/models/player';
+import { Pawn } from './shared/models/pawn';
+import { NUMBER_OF_PAWNS_PER_PLAYER } from './shared/models/game-constants';
 
 @Injectable({
   providedIn: 'root',

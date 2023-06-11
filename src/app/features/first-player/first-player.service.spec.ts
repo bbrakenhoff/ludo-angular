@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
-import { DiceSpy, createDiceSpy } from '../models/dice.spy';
-import { DICE, NUMBER_OF_PLAYERS, PLAYERS } from '../models/game-constants';
+import { DiceSpy, createDiceSpy } from '../../shared/models/dice.spy';
+import { DICE, NUMBER_OF_PLAYERS, PLAYERS } from '../../shared/models/game-constants';
 import {
   PlayerSpy,
   createPlayerMock as createPlayerSpy,
-} from '../models/player.spy';
-import { ObserverSpy, createObserverSpy } from '../observer-spy';
+} from '../../shared/models/player.spy';
+import { ObserverSpy, createObserverSpy } from '../../observer-spy';
 import { FirstPlayerService } from './first-player.service';
-import { LudoColorPipe } from '../ludo-color.pipe';
+import { LudoColorPipe } from '../../shared/pipes/ludo-color.pipe';
 
 describe('FirstPlayerService', () => {
   let service: FirstPlayerService;

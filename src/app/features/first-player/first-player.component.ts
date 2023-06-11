@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { Observable, map, merge, tap } from 'rxjs';
-import { PLAYERS } from '../models/game-constants';
-import { Player } from '../models/player';
+import { PLAYERS } from '../../shared/models/game-constants';
+import { Player } from '../../shared/models/player';
 import { FirstPlayerService } from './first-player.service';
 
 @Component({

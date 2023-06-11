@@ -2,14 +2,15 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { FirstPlayerComponent } from './first-player.component';
-import { Dice } from '../models/dice';
+import { Dice } from '../../shared/models/dice';
 import { FirstPlayerService } from './first-player.service';
 import { CommonModule } from '@angular/common';
-import { LudoColorPipe } from '../ludo-color.pipe';
+import { LudoColorPipe } from '../../shared/pipes/ludo-color.pipe';
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 
 @NgModule({
-  imports: [CommonModule],
-  declarations: [FirstPlayerComponent,LudoColorPipe],
+  imports: [CommonModule, PipesModule],
+  declarations: [FirstPlayerComponent],
   exports: [FirstPlayerComponent],
   providers: [
     { provide: Dice, useFactory: () => new Dice() },

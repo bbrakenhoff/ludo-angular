@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { LudoColor } from './models/ludo-color';
+import { LudoColor } from '../models/ludo-color';
 
 @Pipe({
   name: 'ludoColor',
