@@ -7,6 +7,7 @@ import {
 } from '../models/player.spy';
 import { ObserverSpy, createObserverSpy } from '../observer-spy';
 import { FirstPlayerService } from './first-player.service';
+import { LudoColorPipe } from '../ludo-color.pipe';
 
 describe('FirstPlayerService', () => {
   let service: FirstPlayerService;

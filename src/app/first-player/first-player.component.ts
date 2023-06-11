@@ -1,28 +1,37 @@
 import { Component, Inject } from '@angular/core';
-import { FirstPlayerService } from './first-player.service';
-import { Player } from '../models/player';
-import { Observable, combineLatest, merge } from 'rxjs';
+import { Observable, map, merge, tap } from 'rxjs';
 import { PLAYERS } from '../models/game-constants';
+import { Player } from '../models/player';
+import { FirstPlayerService } from './first-player.service';
 
 @Component({
   selector: 'app-first-player',
   templateUrl: './first-player.component.html',
-  styleUrls: ['./first-player.component.scss'],
 })
 export class FirstPlayerComponent {
-  public readonly latestDiceRolls$ = combineLatest(
-    this.players.map((player) => player.latestDiceRoll$)
+  public readonly latestDiceRoll$ = merge(
+    ...this.players.map((player) => player.latestDiceRoll$)
+  ).pipe(
+    map((latestDiceRoll) => (latestDiceRoll > 0 ? `${latestDiceRoll}` : '-'))
   );
+
   public readonly currentPlayerIndex$ =
     this.firstPlayerService.currentPlayerIndex$;
-  public readonly firstPlayerIndex$: Observable<number>;
+  public readonly firstPlayerIndex$ =
+    this.firstPlayerService.firstPlayerIndex$.pipe(
+      tap((v) =>
+        console.log(
+          `%c🍟🍔🍕 first-player.component.ts[ln:20] first player index`,
+          'color: deeppink',
+          v
+        )
+      )
+    );
 
   public constructor(
-    @Inject(PLAYERS) private readonly players: Player[],
+    @Inject(PLAYERS) public readonly players: Player[],
     private readonly firstPlayerService: FirstPlayerService
-  ) {
-    this.firstPlayerIndex$ = firstPlayerService.firstPlayerIndex$;
-  }
+  ) {}
 
   public currentPlayerRollDice(): void {
     this.firstPlayerService.currentPlayerRollDice();

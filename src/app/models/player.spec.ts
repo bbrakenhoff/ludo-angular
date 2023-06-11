@@ -2,6 +2,7 @@ import { Observer } from 'rxjs';
 import { Dice } from './dice';
 import { Player } from './player';
 import { createObserverSpy } from '../observer-spy';
+import { Pawn } from './pawn';
 
 describe('Player', () => {
   let diceSpy: jasmine.SpyObj<Dice>;
@@ -10,8 +11,14 @@ describe('Player', () => {
 
   beforeEach(() => {
     diceSpy = jasmine.createSpyObj<Dice>('Dice', ['roll']);
-    player = new Player([]);
+    player = new Player([new Pawn('blue')]);
   });
+
+  describe('pawnColor', () =>{
+    it('should return the color of the player\'s pawns', () =>{
+      expect(player.pawnColor).toEqual('blue')
+    })
+  })
 
   describe('rollDice(dice)', () => {
     it('should remember the last dice value rolled', () => {
