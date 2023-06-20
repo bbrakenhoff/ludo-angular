@@ -1,6 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { DiceSpy, createDiceSpy } from '../../shared/models/dice.spy';
-import { DICE, NUMBER_OF_PLAYERS, PLAYERS } from '../../shared/models/game-constants';
+import {
+  DICE,
+  NUMBER_OF_PLAYERS,
+  PLAYERS,
+} from '../../shared/models/game-constants';
 import {
   PlayerSpy,
   createPlayerMock as createPlayerSpy,
@@ -9,7 +13,7 @@ import { ObserverSpy, createObserverSpy } from '../../observer-spy';
 import { FirstPlayerService } from './first-player.service';
 import { LudoColorPipe } from '../../shared/pipes/ludo-color.pipe';
 
-describe('FirstPlayerService', () => {
+fdescribe('FirstPlayerService', () => {
   let service: FirstPlayerService;
 
   let playerSpies: PlayerSpy[];
@@ -49,100 +53,97 @@ describe('FirstPlayerService', () => {
   describe('currentPlayerRollDice()', () => {
     it('should let current player roll the dice', () => {
       service.currentPlayerRollDice();
+
       expect(playerSpies[0].rollDice).toHaveBeenCalledWith(diceSpy.dice);
-
-      expect(currentPlayerIndexObserver.next.calls.count()).toBe(2);
-      expect(
-        currentPlayerIndexObserver.next.calls.allArgs().map((v) => v[0])
-      ).toEqual([0, 1]);
-    });
-
-    it('should change the current player', () => {
-      service.currentPlayerRollDice();
-      expect(playerSpies[0].rollDice).toHaveBeenCalledWith(diceSpy.dice);
-
-      service.currentPlayerRollDice();
-      expect(playerSpies[1].rollDice).toHaveBeenCalledWith(diceSpy.dice);
-
-      service.currentPlayerRollDice();
-      expect(playerSpies[2].rollDice).toHaveBeenCalledWith(diceSpy.dice);
-
-      service.currentPlayerRollDice();
-      expect(playerSpies[3].rollDice).toHaveBeenCalledWith(diceSpy.dice);
-
-      service.currentPlayerRollDice();
-      expect(playerSpies[0].rollDice).toHaveBeenCalledWith(diceSpy.dice);
-      expect(playerSpies[0].rollDice).toHaveBeenCalledTimes(2);
-
-      expect(currentPlayerIndexObserver.next.calls.count()).toBe(6);
-      expect(
-        currentPlayerIndexObserver.next.calls.allArgs().map((v) => v[0])
-      ).toEqual([0, 1, 2, 3, 0, 1]);
     });
   });
 
-  describe('findFirstPlayerIndex()', () => {
-    it('should return false when not all players have rolled the dice', () => {
+  describe('currentPlayerIndex$', () => {
+    it('should change the current player when first player cannot be determined yet', () => {
       service.currentPlayerRollDice();
-      playerSpies[0].latestDiceRoll$$.next(1);
+      expect(playerSpies[0].rollDice).toHaveBeenCalledOnceWith(diceSpy.dice);
+
       service.currentPlayerRollDice();
-      playerSpies[1].latestDiceRoll$$.next(2);
+      expect(playerSpies[1].rollDice).toHaveBeenCalledOnceWith(diceSpy.dice);
+
       service.currentPlayerRollDice();
-      playerSpies[2].latestDiceRoll$$.next(3);
+      expect(playerSpies[2].rollDice).toHaveBeenCalledOnceWith(diceSpy.dice);
+
+      service.currentPlayerRollDice();
+      expect(playerSpies[3].rollDice).toHaveBeenCalledOnceWith(diceSpy.dice);
+
+      expect(currentPlayerIndexObserver.next.calls.count()).toBe(5);
+      expect(
+        currentPlayerIndexObserver.next.calls.allArgs().map((v) => v[0])
+      ).toEqual([0, 1, 2, 3, 0]);
+    });
+  });
+
+  describe('firstPlayerIndex$', () => {
+    it('should not do anything when not all players have rolled the dice', () => {
+      diceSpy.roll.and.returnValues(1, 2, 3);
+
+      service.currentPlayerRollDice();
+      service.currentPlayerRollDice();
+      service.currentPlayerRollDice();
 
       expect(firstPlayerIndexObserverSpy.next).not.toHaveBeenCalled();
     });
 
-    it('should return -1 when 2 or more players have the highest dice roll', () => {
-      service.currentPlayerRollDice();
-      playerSpies[0].latestDiceRoll$$.next(3);
-      service.currentPlayerRollDice();
-      playerSpies[1].latestDiceRoll$$.next(2);
-      service.currentPlayerRollDice();
-      playerSpies[2].latestDiceRoll$$.next(3);
-      service.currentPlayerRollDice();
-      playerSpies[3].latestDiceRoll$$.next(1);
+    it('should not do anything when the highest dice roll has been rolled multiple times', () => {
+      diceSpy.roll.and.returnValues(3, 2, 3, 1);
 
+      service.currentPlayerRollDice();
+      service.currentPlayerRollDice();
+      service.currentPlayerRollDice();
+      service.currentPlayerRollDice();
+
+      expect(
+        currentPlayerIndexObserver.next.calls.allArgs().map((v) => v[0])
+      ).toEqual([0, 1, 2, 3, 0]);
       expect(firstPlayerIndexObserverSpy.next).not.toHaveBeenCalled();
     });
 
     it('should return the index of player with highest dice roll', () => {
+      diceSpy.roll.and.returnValues(3, 2, 4, 1, 5);
       service.currentPlayerRollDice();
-      playerSpies[0].latestDiceRoll$$.next(3);
       service.currentPlayerRollDice();
-      playerSpies[1].latestDiceRoll$$.next(2);
       service.currentPlayerRollDice();
-      playerSpies[2].latestDiceRoll$$.next(4);
       service.currentPlayerRollDice();
-      playerSpies[3].latestDiceRoll$$.next(1);
 
-      expect(firstPlayerIndexObserverSpy.next.calls.mostRecent().args[0]).toBe(
-        2
-      );
-      expect(firstPlayerIndexObserverSpy.complete).toHaveBeenCalled();
+      expect(diceSpy.roll).toHaveBeenCalledTimes(4);
+      expect(playerSpies[0].rollDice).toHaveBeenCalledOnceWith(diceSpy.dice);
+      expect(playerSpies[1].rollDice).toHaveBeenCalledOnceWith(diceSpy.dice);
+      expect(playerSpies[2].rollDice).toHaveBeenCalledOnceWith(diceSpy.dice);
+      expect(playerSpies[3].rollDice).toHaveBeenCalledOnceWith(diceSpy.dice);
+
+      expect(
+        currentPlayerIndexObserver.next.calls.allArgs().map((v) => v[0])
+      ).toEqual([0, 1, 2, 3]);
+
+      expect(firstPlayerIndexObserverSpy.next).toHaveBeenCalledWith(2);
+
       expect(currentPlayerIndexObserver.complete).toHaveBeenCalled();
+      expect(firstPlayerIndexObserverSpy.complete).toHaveBeenCalled();
     });
 
     it('should return the index of the player with highest dice roll after highest dice roll exists multiple times', () => {
-      service.currentPlayerRollDice();
-      playerSpies[0].latestDiceRoll$$.next(3);
-      service.currentPlayerRollDice();
-      playerSpies[1].latestDiceRoll$$.next(2);
-      service.currentPlayerRollDice();
-      playerSpies[2].latestDiceRoll$$.next(3);
-      service.currentPlayerRollDice();
-      playerSpies[3].latestDiceRoll$$.next(1);
+      diceSpy.roll.and.returnValues(3, 2, 3, 1, 4, 6, 3, 2);
 
       service.currentPlayerRollDice();
-      playerSpies[0].latestDiceRoll$$.next(3);
       service.currentPlayerRollDice();
-      playerSpies[1].latestDiceRoll$$.next(2);
       service.currentPlayerRollDice();
-      playerSpies[2].latestDiceRoll$$.next(4);
       service.currentPlayerRollDice();
-      playerSpies[3].latestDiceRoll$$.next(6);
 
-      expect(firstPlayerIndexObserverSpy.next).toHaveBeenCalledOnceWith(3);
+      service.currentPlayerRollDice();
+      service.currentPlayerRollDice();
+      service.currentPlayerRollDice();
+      service.currentPlayerRollDice();
+
+      expect(
+        currentPlayerIndexObserver.next.calls.allArgs().map((n) => n[0])
+      ).toEqual([0, 1, 2, 3, 0, 1, 2, 3]);
+      expect(firstPlayerIndexObserverSpy.next).toHaveBeenCalledOnceWith(1);
       expect(firstPlayerIndexObserverSpy.complete).toHaveBeenCalled();
       expect(currentPlayerIndexObserver.complete).toHaveBeenCalled();
     });

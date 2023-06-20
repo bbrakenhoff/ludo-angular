@@ -11,7 +11,7 @@ describe('Player', () => {
 
   beforeEach(() => {
     diceSpy = jasmine.createSpyObj<Dice>('Dice', ['roll']);
-    player = new Player([new Pawn('blue')]);
+    player = new Player('Player test',[new Pawn('blue')]);
   });
 
   describe('pawnColor', () =>{

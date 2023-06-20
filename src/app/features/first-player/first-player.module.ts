@@ -7,10 +7,12 @@ import { FirstPlayerService } from './first-player.service';
 import { CommonModule } from '@angular/common';
 import { LudoColorPipe } from '../../shared/pipes/ludo-color.pipe';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
+import { StatusMessageComponent } from './status-message/status-message.component';
+import { PlayerComponent } from './player/player.component';
 
 @NgModule({
   imports: [CommonModule, PipesModule],
-  declarations: [FirstPlayerComponent],
+  declarations: [FirstPlayerComponent, StatusMessageComponent, PlayerComponent],
   exports: [FirstPlayerComponent],
   providers: [
     { provide: Dice, useFactory: () => new Dice() },

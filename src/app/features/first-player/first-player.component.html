@@ -1,32 +1,24 @@
 <div
-  class="relative container mx-auto grid grid-cols-2 content-stretch gap-px p-px bg-slate-200"
+  class="flex justify-center items-center"
+  *ngIf="
+    firstPlayerIndex$ | async as firstPlayerIndex;
+    else determineFirstPlayer
+  "
 >
-  <div
-    *ngIf="
-      firstPlayerIndex$ | async as firstPlayerIndex;
-      else determineFirstPlayer
-    "
-  >
-    <h1>First player determined: {{ firstPlayerIndex + 1 }}</h1>
-  </div>
-  <ng-template #determineFirstPlayer>
-    <div
-      class="flex items-center justify-center gap-6 p-5 bg-white"
-      *ngFor="let player of players; let i = index"
-    >
-      <div
-        class="w-12 h-12 rounded-full"
-        [ngClass]="player.pawnColor | ludoColor : 'bg'"
-      ></div>
-      <div
-        class="text-xl"
-        [class.font-bold]="(currentPlayerIndex$ | async) === i"
+  <app-status-message [firstPlayerIndex]="firstPlayerIndex">
+  </app-status-message>
+</div>
+<ng-template #determineFirstPlayer>
+  <div class="relative bg-orange-200 w-1/2 grid grid-cols-2 gap-6 p-5 mx-auto">
+    <div *ngFor="let player of players; let i = index">
+      <app-player
+        [player]="player"
+        [isCurrentPlayer]="(currentPlayerIndex$ | async) === i"
       >
-        Player {{ i + 1 }}
-      </div>
+      </app-player>
     </div>
     <div
-      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-md bg-white cursor-pointer select-none"
+      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-md bg-white cursor-pointer select-none rounded"
     >
       <div
         (click)="currentPlayerRollDice()"
@@ -35,5 +27,5 @@
         {{ latestDiceRoll$ | async }}
       </div>
     </div>
-  </ng-template>
-</div>
+  </div>
+</ng-template>

@@ -7,7 +7,10 @@ export class Player {
   private readonly latestDiceRoll$$ = new BehaviorSubject<number>(-1);
   public readonly latestDiceRoll$ = this.latestDiceRoll$$.asObservable();
 
-  public constructor(readonly pawns: readonly Pawn[] = []) {}
+  public constructor(
+    public readonly name: string,
+    public readonly pawns: readonly Pawn[] = []
+  ) {}
 
   public get pawnColor(): LudoColor {
     return this.pawns[0].color;

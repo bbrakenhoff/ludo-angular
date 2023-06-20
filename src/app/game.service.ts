@@ -9,9 +9,9 @@ import { NUMBER_OF_PAWNS_PER_PLAYER } from './shared/models/game-constants';
 })
 export class GameService {
   public readonly players = AllColors.map(
-    (color) => new Player(this.createPawnsForPlayer(color))
+    (color, i) =>
+      new Player(`Player ${i + 1}`, this.createPawnsForPlayer(color))
   );
-  
 
   private createPawnsForPlayer(color: LudoColor): Pawn[] {
     return Array.from(

@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { Observable, map, merge, tap } from 'rxjs';
+import { Observable, delay, map, merge, tap } from 'rxjs';
 import { PLAYERS } from '../../shared/models/game-constants';
 import { Player } from '../../shared/models/player';
 import { FirstPlayerService } from './first-player.service';
@@ -18,15 +18,7 @@ export class FirstPlayerComponent {
   public readonly currentPlayerIndex$ =
     this.firstPlayerService.currentPlayerIndex$;
   public readonly firstPlayerIndex$ =
-    this.firstPlayerService.firstPlayerIndex$.pipe(
-      tap((v) =>
-        console.log(
-          `%c🍟🍔🍕 first-player.component.ts[ln:20] first player index`,
-          'color: deeppink',
-          v
-        )
-      )
-    );
+    this.firstPlayerService.firstPlayerIndex$.pipe(delay(500));
 
   public constructor(
     @Inject(PLAYERS) public readonly players: Player[],

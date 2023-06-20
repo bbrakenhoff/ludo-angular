@@ -1,5 +1,4 @@
 import { LudoColorPipe } from './ludo-color.pipe';
-import { LudoColor } from './shared/models/ludo-color';
 describe('LudoColorPipe', () => {
   let pipe: LudoColorPipe;
 
