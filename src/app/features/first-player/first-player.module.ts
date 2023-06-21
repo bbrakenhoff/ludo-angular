@@ -9,9 +9,10 @@ import { LudoColorPipe } from '../../shared/pipes/ludo-color.pipe';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { StatusMessageComponent } from './status-message/status-message.component';
 import { PlayerComponent } from './player/player.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  imports: [CommonModule, PipesModule],
+  imports: [CommonModule,RouterModule, PipesModule],
   declarations: [FirstPlayerComponent, StatusMessageComponent, PlayerComponent],
   exports: [FirstPlayerComponent],
   providers: [

@@ -7,7 +7,7 @@
     </div>
     <div class="flex-1 flex flex-row items-center gap-4">
       <div class="w-12 h-12">
-        <svg class="fill-green-500"  viewBox="0 0 24 24">
+        <svg class="fill-green-500" viewBox="0 0 24 24">
           <use xlink:href="/assets/icons/check.svg#check"></use>
         </svg>
       </div>
@@ -17,8 +17,11 @@
       </p>
     </div>
 
-    <button class="bg-rose-600 text-white font-semibold py-2 px-4 rounded hover:bg-rose-700">
+    <a
+      [routerLink]="['/game']"
+      class="bg-rose-600 text-white font-semibold py-2 px-4 rounded hover:bg-rose-700"
+    >
       Start the game!
-    </button>
+    </a>
   </div>
 </div>
