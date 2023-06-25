@@ -5,7 +5,14 @@
     else determineFirstPlayer
   "
 >
-  <app-status-message [firstPlayerIndex]="firstPlayerIndex"> </app-status-message>
+  <app-alert-message
+    [title]="'First player determined!'"
+    [icon]="'check-circle'"
+    [message]="'The player who may start the game is ' + firstPlayerIndex"
+    [buttonText]="'Start the game!'"
+    (buttonClick)="onAlertButtonClick()"
+  >
+  </app-alert-message>
 </div>
 <ng-template #determineFirstPlayer>
   <div class="relative bg-orange-200 w-1/2 grid grid-cols-2 gap-6 p-5 mx-auto">

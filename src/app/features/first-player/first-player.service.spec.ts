@@ -7,13 +7,13 @@ import {
 } from '../../shared/models/game-constants';
 import {
   PlayerSpy,
-  createPlayerMock as createPlayerSpy,
+  createPlayerSpy as createPlayerSpy,
 } from '../../shared/models/player.spy';
 import { ObserverSpy, createObserverSpy } from '../../observer-spy';
 import { FirstPlayerService } from './first-player.service';
 import { LudoColorPipe } from '../../shared/pipes/ludo-color.pipe';
 
-fdescribe('FirstPlayerService', () => {
+describe('FirstPlayerService', () => {
   let service: FirstPlayerService;
 
   let playerSpies: PlayerSpy[];

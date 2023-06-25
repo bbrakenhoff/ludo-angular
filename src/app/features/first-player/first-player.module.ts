@@ -1,19 +1,17 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 
-import { FirstPlayerComponent } from './first-player.component';
-import { Dice } from '../../shared/models/dice';
-import { FirstPlayerService } from './first-player.service';
 import { CommonModule } from '@angular/common';
-import { LudoColorPipe } from '../../shared/pipes/ludo-color.pipe';
-import { PipesModule } from 'src/app/shared/pipes/pipes.module';
-import { StatusMessageComponent } from './status-message/status-message.component';
-import { PlayerComponent } from './player/player.component';
 import { RouterModule } from '@angular/router';
+import { ComponentsModule } from 'src/app/shared/components/components.module';
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
+import { Dice } from '../../shared/models/dice';
+import { FirstPlayerComponent } from './first-player.component';
+import { FirstPlayerService } from './first-player.service';
+import { PlayerComponent } from './player/player.component';
 
 @NgModule({
-  imports: [CommonModule,RouterModule, PipesModule],
-  declarations: [FirstPlayerComponent, StatusMessageComponent, PlayerComponent],
+  imports: [CommonModule, RouterModule, ComponentsModule, PipesModule],
+  declarations: [FirstPlayerComponent, PlayerComponent],
   exports: [FirstPlayerComponent],
   providers: [
     { provide: Dice, useFactory: () => new Dice() },

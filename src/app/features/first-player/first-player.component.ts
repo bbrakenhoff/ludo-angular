@@ -28,4 +28,11 @@ export class FirstPlayerComponent {
   public currentPlayerRollDice(): void {
     this.firstPlayerService.currentPlayerRollDice();
   }
+
+  public onAlertButtonClick(): void {
+    console.log(
+      `%c🍟🍔🍕 first-player.component.ts[ln:33] onAlertButtonClick()`,
+      'color: deeppink'
+    );
+  }
 }
