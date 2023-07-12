@@ -15,7 +15,7 @@ import { PlayerComponent } from './player/player.component';
   exports: [FirstPlayerComponent],
   providers: [
     { provide: Dice, useFactory: () => new Dice() },
-    FirstPlayerService,
-  ],
+    FirstPlayerService
+  ]
 })
 export class FirstPlayerModule {}

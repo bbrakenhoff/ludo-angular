@@ -2,14 +2,14 @@
   <div class="flex flex-col items-center gap-4">
     <div class="flex-1">
       <strong
-        class="block font-medium text-xl text-gray-900"
+        class="block text-xl font-medium text-gray-900"
         data-testid="title"
       >
         {{ title }}
       </strong>
     </div>
-    <div class="flex-1 flex flex-row items-center gap-4">
-      <div class="w-12 h-12">
+    <div class="flex flex-1 flex-row items-center gap-4">
+      <div class="h-12 w-12">
         <svg class="fill-green-500" viewBox="0 0 24 24" *ngIf="icon" [ngSwitch]="icon" data-testid="icon">
           <use
             *ngSwitchCase="'check-circle'"
@@ -28,7 +28,7 @@
 
     <button
       (click)="onButtonClick()"
-      class="bg-rose-600 text-white font-semibold py-2 px-4 rounded hover:bg-rose-700 cursor-pointer"
+      class="cursor-pointer rounded bg-rose-600 px-4 py-2 font-semibold text-white hover:bg-rose-700"
       data-testid="button"
     >
       {{ buttonText }}

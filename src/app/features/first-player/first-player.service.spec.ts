@@ -1,17 +1,13 @@
 import { TestBed } from '@angular/core/testing';
+import { ObserverSpy, createObserverSpy } from '../../observer-spy';
 import { DiceSpy, createDiceSpy } from '../../shared/models/dice.spy';
 import {
   DICE,
   NUMBER_OF_PLAYERS,
-  PLAYERS,
+  PLAYERS
 } from '../../shared/models/game-constants';
-import {
-  PlayerSpy,
-  createPlayerSpy as createPlayerSpy,
-} from '../../shared/models/player.spy';
-import { ObserverSpy, createObserverSpy } from '../../observer-spy';
+import { PlayerSpy, createPlayerSpy } from '../../shared/models/player.spy';
 import { FirstPlayerService } from './first-player.service';
-import { LudoColorPipe } from '../../shared/pipes/ludo-color.pipe';
 
 describe('FirstPlayerService', () => {
   let service: FirstPlayerService;
@@ -35,8 +31,8 @@ describe('FirstPlayerService', () => {
       providers: [
         FirstPlayerService,
         { provide: DICE, useValue: diceSpy.dice },
-        { provide: PLAYERS, useValue: playerSpies.map((spy) => spy.player) },
-      ],
+        { provide: PLAYERS, useValue: playerSpies.map((spy) => spy.player) }
+      ]
     });
     service = TestBed.inject(FirstPlayerService);
 

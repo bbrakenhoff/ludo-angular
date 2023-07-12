@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, filter, map, take, tap } from 'rxjs';
 import { Dice } from '../../shared/models/dice';
-import { Player } from '../../shared/models/player';
 import { DICE, PLAYERS } from '../../shared/models/game-constants';
+import { Player } from '../../shared/models/player';
 
 @Injectable()
 export class FirstPlayerService {

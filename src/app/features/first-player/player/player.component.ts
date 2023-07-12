@@ -4,8 +4,7 @@ import { Player } from 'src/app/shared/models/player';
 
 @Component({
   selector: 'app-player[player][isCurrentPlayer]',
-  templateUrl: './player.component.html',
-  styleUrls: ['./player.component.scss'],
+  templateUrl: './player.component.html'
 })
 export class PlayerComponent {
   private _player!: Player;
@@ -23,7 +22,7 @@ export class PlayerComponent {
   }
 
   @Input()
-  public isCurrentPlayer: boolean = false;
+  public isCurrentPlayer = false;
 
   public latestDiceRoll$!: Observable<string>;
 }

@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlayerComponent } from './player.component';
-import { LudoColorPipe } from 'src/app/shared/pipes/ludo-color.pipe';
 import { PlayerSpy, createPlayerSpy } from 'src/app/shared/models/player.spy';
+import { LudoColorPipe } from 'src/app/shared/pipes/ludo-color.pipe';
+import { PlayerComponent } from './player.component';
 
 describe('PlayerComponent', () => {
   let component: PlayerComponent;
@@ -14,7 +14,7 @@ describe('PlayerComponent', () => {
     playerSpy = createPlayerSpy();
 
     TestBed.configureTestingModule({
-      declarations: [PlayerComponent, LudoColorPipe],
+      declarations: [PlayerComponent, LudoColorPipe]
     });
     fixture = TestBed.createComponent(PlayerComponent);
     component = fixture.componentInstance;

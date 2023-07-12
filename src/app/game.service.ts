@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { AllColors, LudoColor } from './shared/models/ludo-color';
-import { Player } from './shared/models/player';
-import { Pawn } from './shared/models/pawn';
 import { NUMBER_OF_PAWNS_PER_PLAYER } from './shared/models/game-constants';
+import { AllColors, LudoColor } from './shared/models/ludo-color';
+import { Pawn } from './shared/models/pawn';
+import { Player } from './shared/models/player';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class GameService {
   public readonly players = AllColors.map(

@@ -1,12 +1,12 @@
 import { Component, Inject } from '@angular/core';
-import { Observable, delay, map, merge, tap } from 'rxjs';
+import { delay, map, merge } from 'rxjs';
 import { PLAYERS } from '../../shared/models/game-constants';
 import { Player } from '../../shared/models/player';
 import { FirstPlayerService } from './first-player.service';
 
 @Component({
   selector: 'app-first-player',
-  templateUrl: './first-player.component.html',
+  templateUrl: './first-player.component.html'
 })
 export class FirstPlayerComponent {
   public readonly latestDiceRoll$ = merge(

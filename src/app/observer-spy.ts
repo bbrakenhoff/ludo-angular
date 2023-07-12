@@ -16,12 +16,12 @@ export function createObserverSpy<T>() {
     },
     error: (error) => {
       throw error;
-    },
+    }
   };
 
   return {
     observer,
     next: spyOn(observer, 'next'),
-    complete: spyOn(observer, 'complete'),
+    complete: spyOn(observer, 'complete')
   };
 }

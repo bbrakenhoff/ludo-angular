@@ -10,6 +10,6 @@ import { GameComponent } from './features/game/game.component';
   declarations: [AppComponent, GameComponent],
   imports: [AppRoutingModule, FirstPlayerModule, BrowserModule],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

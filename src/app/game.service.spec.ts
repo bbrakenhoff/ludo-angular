@@ -1,10 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { GameService } from './game.service';
-import {
-  NUMBER_OF_NORMAL_SQUARES,
-  NUMBER_OF_PAWNS_PER_PLAYER,
-} from './shared/models/game-constants';
+import { NUMBER_OF_PAWNS_PER_PLAYER } from './shared/models/game-constants';
 
 describe('GameService', () => {
   let service: GameService;

@@ -1,5 +1,7 @@
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <div
-  class="flex justify-center items-center"
+  class="flex items-center justify-center"
   *ngIf="
     firstPlayerIndex$ | async as firstPlayerIndex;
     else determineFirstPlayer
@@ -15,7 +17,7 @@
   </app-alert-message>
 </div>
 <ng-template #determineFirstPlayer>
-  <div class="relative bg-orange-200 w-1/2 grid grid-cols-2 gap-6 p-5 mx-auto">
+  <div class="relative mx-auto grid w-1/2 grid-cols-2 gap-6 bg-orange-200 p-5">
     <div *ngFor="let player of players; let i = index">
       <app-player
         [player]="player"
@@ -24,11 +26,11 @@
       </app-player>
     </div>
     <div
-      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-md bg-white cursor-pointer select-none rounded"
+      class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer select-none rounded bg-white shadow-md"
     >
       <div
         (click)="currentPlayerRollDice()"
-        class="flex justify-center items-center w-20 h-20"
+        class="flex h-20 w-20 items-center justify-center"
       >
         {{ latestDiceRoll$ | async }}
       </div>
